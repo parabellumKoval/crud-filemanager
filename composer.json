@@ -1,0 +1,33 @@
+{
+    "name": "parabellumkoval/crud-filemanager",
+    "description": "Backpack admin interface for files and folder, using elFinder",
+    "license": "MIT",
+    "authors": [],
+    "homepage": "https://github.com/parabellumkoval/CRUD-filemanager",
+    "keywords": ["Laravel", "FileManager"],
+    "require": {
+        "barryvdh/laravel-elfinder": "^0.5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Backpack\\FileManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Backpack\\FileManager\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Backpack\\FileManager\\FileManagerServiceProvider"
+            ]
+        }
+    }
+}
