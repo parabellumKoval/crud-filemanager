@@ -18,18 +18,17 @@ class BackpackElfinderController extends \Barryvdh\Elfinder\ElfinderController
 
     public function showPopup($input_id)
     {
-        $mimes = request('mimes');
+        $mimes = [];
+        $encryptedMimes = request('mimes');
 
-        if (! isset($mimes)) {
-            Log::error('Someone attempted to tamper with mime types in elfinder popup. The attempt was blocked.');
-            abort(403, 'Unauthorized action.');
-        }
-
-        try {
-            $mimes = Crypt::decrypt(urldecode(request('mimes')));
-        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            Log::error('Someone attempted to tamper with mime types in elfinder popup. The attempt was blocked.');
-            abort(403, 'Unauthorized action.');
+        // "browse" field opens popup without mimes; this is a valid scenario.
+        if (filled($encryptedMimes)) {
+            try {
+                $mimes = Crypt::decrypt(urldecode((string) $encryptedMimes));
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                Log::error('Someone attempted to tamper with mime types in elfinder popup. The attempt was blocked.');
+                abort(403, 'Unauthorized action.');
+            }
         }
 
         if (! empty($mimes)) {
